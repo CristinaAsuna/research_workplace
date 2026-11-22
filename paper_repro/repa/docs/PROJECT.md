@@ -17,10 +17,11 @@
 
 ## 方法概要
 
-- 主干：SiT（linear 插值路径，v 预测，uniform 权重），在 SD-VAE 的 32×32×4 latent 上训练。
+- 主干：SiT（linear 插值路径，v 预测，uniform 权重），在 SD-VAE 的 32×32×4 latent 上训练（契约见 docs/DATA.md）。
 - 对齐：取 SiT 第 `encoder-depth` 层（B/2 用 4，L/2、XL/2 用 8）的 patch token，经一个 3 层 SiLU MLP 投影器，和干净图像的 DINOv2-B patch 特征算负余弦相似度。
 - 损失：L = L_velocity + λ·L_REPA，λ = 0.5（`--proj-coeff`）。投影器只在训练时使用。
-- 训练：batch 256，AdamW，lr 1e-4 恒定，无 weight decay，fp16 混合精度 + 梯度裁剪。
+- 训练：batch 256，AdamW，lr 1e-4 恒定，无 weight decay，fp16 混合精度，梯度裁剪 1.0，EMA 0.9999（代码写死，论文未写）。
+- 论文的数用官方代码的 `--legacy` 跑出：类别标签被丢两次，有效丢弃率约 19%（作者在 issue #5 说明）。不开 legacy 时有用户得到 B/2 400K FID 23。
 - 采样与评测：SDE Euler–Maruyama，250 步；FID-50K，用 ADM（openai/guided-diffusion）评测套件和参考 batch。
 
 ## 论文报告值（复现目标，未在本仓库复现）
@@ -30,15 +31,18 @@ ImageNet 256×256，无 CFG，SDE 250 步，FID-50K。列：FID / sFID / IS / Pr
 | 模型 | 步数 | 结果 |
 |---|---|---|
 | SiT-B/2 | 400K | 33.0 / 6.46 / 43.7 / 0.53 / 0.63 |
+| SiT-B/2 + REPA | 50K | 78.2 / 11.71 / 17.1 / 0.33 / 0.48 |
+| SiT-B/2 + REPA | 100K | 49.5 / 7.00 / 27.5 / 0.46 / 0.59 |
+| SiT-B/2 + REPA | 200K | 33.2 / 6.68 / 43.7 / 0.54 / 0.63 |
 | SiT-B/2 + REPA | 400K | 24.4 / 6.40 / 59.9 / 0.59 / 0.65 |
 | SiT-L/2 | 400K | 18.8 / 5.29 / 72.0 / 0.64 / 0.64 |
-| SiT-L/2 + REPA | 400K | 9.7（Table 2，DINOv2-B，depth 8）；Table 8 写 10.0，待核对 |
+| SiT-L/2 + REPA | 400K | Table 3 写 9.7，Table 8 写 10.0（论文内部不一致） |
 | SiT-XL/2 + REPA | 400K | 7.9 / 5.06 / 122.6 / 0.70 / 0.65 |
 | SiT-XL/2 | 7M | 8.3 / 6.32 / 131.7 / 0.68 / 0.67 |
 | SiT-XL/2 + REPA | 4M | 5.9 / 5.73 / 157.8 / 0.70 / 0.69 |
 | SiT-XL/2 + REPA，CFG 1.8，区间 [0, 0.7] | 4M | 1.42 / 4.70 / 305.7 / 0.80 / 0.64 |
 
-除 SiT-L/2 两行和 7.9、1.42 外，其余数字来自论文 HTML 的摘要提取，引用前对照论文原表再核对一次。
+SiT-B/2 各行和 SiT-L/2、XL/2 的 vanilla 行已逐字对照 arXiv v4 Table 8（无 CFG）；Table 8 没有 400K 以下的 vanilla。XL/2 + REPA 的 4M 和 CFG 行来自正文与摘要，未逐字核对表格。
 
 ## 已有结论
 
