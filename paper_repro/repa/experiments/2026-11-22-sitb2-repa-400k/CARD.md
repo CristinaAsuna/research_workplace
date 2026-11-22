@@ -24,7 +24,7 @@
 
 ## 计算和存储预算
 - 第 0 步（与数据准备并行）：用官方 SiT-XL/2 4M checkpoint 生成 50K 样本评 FID，`bme_a10080g` 单卡，约 4–8 GPU 小时。与论文 5.9 相差超过 0.5 就停，不开始训练。
-- 数据准备：ImageNet train 在登录节点分段下载约 150 GB；裁剪成 256 PNG 约 100–200 GB、latent 约 40 GB（实测后改写）；放 `Datasets/imagenet/`，不计入下面的上限。
+- 数据准备：ImageNet 已在集群（`Datasets/Data/imagenet/train/`，1,281,162 张），不用下载；裁剪成 256 PNG 约 100–200 GB（bme_cpu，数小时）、latent 约 40 GB（约 1–2 GPU 小时），放 `Datasets/Data/imagenet/repa_in256/`，不计入下面的上限。
 - 训练：集群 `bme_gpu` 2×A100 80G PCIe（付费），FLOPs 估墙钟 22–33 h（44–66 GPU 小时），先跑 1000 步实测速度。墙钟超过 50 h 或出现 NaN 就停下问用户，不自行改精度。中间 FID 在 `bme_a10080g` 单卡上与训练并行，合计约 8 GPU 小时。
 - 存储上限 30 GB（runs/ 下全部产物）；生成样本的 PNG 和 .npz 评测后删除。
 

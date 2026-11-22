@@ -8,12 +8,17 @@
 
 | 标识 | 内容和规模 | 用途 | 不能混淆的边界 |
 |---|---|---|---|
-| imagenet-1k-train | ILSVRC2012 train，约 128 万张，1000 类，约 150 GB | 训练 | 只用 train，不用 val 调参 |
+| imagenet-1k-train | ILSVRC2012 train（Kaggle 版），1000 类，可读 1,281,162 张（原 1,281,167，5 张无法解码已隔离）；原始数据 157 GB | 训练 | 只用 train，不用 val 调参 |
 | in256-images | 上面的 train 经 center-crop-dhariwal 到 256×256 的 PNG，约 100–200 GB（待实测） | 训练时给 DINOv2 的干净图像 | 和 latent 一一对应，同一次预处理产生 |
 | in256-vae-sd | 上面的图像经 sd-vae-ft-mse 编码的 latent 分布参数，约 40 GB（待实测） | SiT 训练输入 | 编码用 ft-mse，解码用 ft-ema，两者都已在集群 |
 | adm-ref-in256 | ADM 评测套件的 ImageNet 256 参考 batch（.npz） | FID/sFID/IS/P/R 的参考统计 | 只用于评测 |
 
-位置：集群 `/public_bme/home/maxquan/Datasets/imagenet/`（下载前现场查空间和配额），登记进 MACHINES.md。PC 和 Mac 不存。
+位置（集群，已有，2026-08 下载并校验）：
+- 原始数据：`/public_bme/home/maxquan/Datasets/Data/imagenet/raw/ILSVRC/`
+- ImageFolder 布局（符号链接，已去掉坏图）：`/public_bme/home/maxquan/Datasets/Data/imagenet/train/`、`val/`
+- 坏图清单：同目录 `invalid_images_4062340.tsv`，隔离在 `quarantine_invalid_links/`
+- 预处理产物（in256-images、in256-vae-sd）计划放 `/public_bme/home/maxquan/Datasets/Data/imagenet/repa_in256/`，写之前现场查空间和配额。
+PC 和 Mac 不存。
 
 ## 契约
 
@@ -32,9 +37,9 @@
 
 ## 预处理
 
-基于 edm2 的 `dataset_tools.py`（官方仓库 preprocessing/）。下载在登录节点上分段做，每段不超过 1 小时；裁剪在 `bme_cpu`，编码在 GPU 队列：
+基于 edm2 的 `dataset_tools.py`（官方仓库 preprocessing/）。源目录用去掉坏图的 ImageFolder `train/`，不用 `raw/`（raw 里仍有 5 张无法解码的文件）。裁剪在 `bme_cpu`，编码在 GPU 队列：
 
 ```bash
-python dataset_tools.py convert --source=<IMAGENET>/ILSVRC/Data/CLS-LOC/train --dest=<TARGET>/images --resolution=256x256 --transform=center-crop-dhariwal
+python dataset_tools.py convert --source=/public_bme/home/maxquan/Datasets/Data/imagenet/train --dest=<TARGET>/images --resolution=256x256 --transform=center-crop-dhariwal
 python dataset_tools.py encode --source=<TARGET>/images --dest=<TARGET>/vae-sd
 ```
