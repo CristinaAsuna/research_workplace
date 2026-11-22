@@ -25,7 +25,7 @@ accelerate launch --num_processes 2 train.py --allow-tf32 --mixed-precision="fp1
   --path-type="linear" --prediction="v" --weighting="uniform" --legacy \
   --model="SiT-B/2" --enc-type="dinov2-vit-b" --proj-coeff=0.5 --encoder-depth=4 \
   --batch-size=256 --max-train-steps=400000 --checkpointing-steps=50000 \
-  --output-dir="runs/<id>" --exp-name="<id>" --data-dir=<TARGET>
+  --output-dir="runs/<id>" --exp-name="<id>" --data-dir=$LAB_DATA_DIR/imagenet-repa-in256
 ```
 
 `--batch-size` 是全局 batch。官方 `--encoder-depth` 默认是 8，B/2 必须传 4。

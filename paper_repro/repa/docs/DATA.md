@@ -13,12 +13,12 @@
 | in256-vae-sd | 上面的图像经 sd-vae-ft-mse 编码的 latent 分布参数，约 40 GB（待实测） | SiT 训练输入 | 编码用 ft-mse，解码用 ft-ema，两者都已在集群 |
 | adm-ref-in256 | ADM 评测套件的 ImageNet 256 参考 batch（.npz） | FID/sFID/IS/P/R 的参考统计 | 只用于评测 |
 
-位置（集群，已有，2026-08 下载并校验）：
-- 原始数据：`/public_bme/home/maxquan/Datasets/Data/imagenet/raw/ILSVRC/`
-- ImageFolder 布局（符号链接，已去掉坏图）：`/public_bme/home/maxquan/Datasets/Data/imagenet/train/`、`val/`
-- 坏图清单：同目录 `invalid_images_4062340.tsv`，隔离在 `quarantine_invalid_links/`
-- 预处理产物（in256-images、in256-vae-sd）计划放 `/public_bme/home/maxquan/Datasets/Data/imagenet/repa_in256/`，写之前现场查空间和配额。
-PC 和 Mac 不存。
+位置一律写成 `$LAB_DATA_DIR/<名称>/`（集群上 `LAB_DATA_DIR=/public_bme/home/maxquan/Datasets/Data`，在 `~/.bashrc` 里设置）。只在集群上，PC 和 Mac 不存。
+- `$LAB_DATA_DIR/imagenet/`（已有，2026-08 下载并校验）：
+  - `raw/ILSVRC/`：原始数据；
+  - `train/`、`val/`：ImageFolder 布局，符号链接，已去掉坏图；
+  - `invalid_images_4062340.tsv`：坏图清单，坏图隔离在 `quarantine_invalid_links/`。
+- `$LAB_DATA_DIR/imagenet-repa-in256/`（待生成）：`images/`（in256-images）和 `vae-sd/`（in256-vae-sd），作为训练的 `--data-dir`。写之前现场查空间和配额，生成后登记进 MACHINES.md。
 
 ## 契约
 
@@ -40,6 +40,6 @@ PC 和 Mac 不存。
 基于 edm2 的 `dataset_tools.py`（官方仓库 preprocessing/）。源目录用去掉坏图的 ImageFolder `train/`，不用 `raw/`（raw 里仍有 5 张无法解码的文件）。裁剪在 `bme_cpu`，编码在 GPU 队列：
 
 ```bash
-python dataset_tools.py convert --source=/public_bme/home/maxquan/Datasets/Data/imagenet/train --dest=<TARGET>/images --resolution=256x256 --transform=center-crop-dhariwal
-python dataset_tools.py encode --source=<TARGET>/images --dest=<TARGET>/vae-sd
+python dataset_tools.py convert --source=$LAB_DATA_DIR/imagenet/train --dest=$LAB_DATA_DIR/imagenet-repa-in256/images --resolution=256x256 --transform=center-crop-dhariwal
+python dataset_tools.py encode --source=$LAB_DATA_DIR/imagenet-repa-in256/images --dest=$LAB_DATA_DIR/imagenet-repa-in256/vae-sd
 ```
