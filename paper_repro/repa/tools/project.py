@@ -34,6 +34,7 @@ KEPT_CHECKPOINTS = {"best.pt", "last.pt"}
 MISPLACED_DIRS = re.compile(r"(?i)(cache|site-packages|^\.?venv$|^node_modules$)")
 DUPLICATE_MIN_BYTES = 100 * 1024 ** 2
 AUDIT_WARN_GB = 10
+DATA_WARN_GB = 1
 GB = 1024 ** 3
 CARD = """# {id}
 
@@ -455,6 +456,16 @@ def cmd_check(args):
         if relative.endswith(".py") and relative.startswith(("src/", "experiments/")) and not relative.endswith("/artifacts.py"):
             if re.search(r"\btorch\.save\(", (root / relative).read_text(encoding="utf-8", errors="replace")):
                 warnings.append("{} 直接调用了 torch.save：checkpoint 改用 artifacts.save_checkpoint，缓存改用 artifacts.cache_dir。".format(relative))
+    data = root / "data"
+    if data.is_dir() and not data.is_symlink():
+        warnings.append("data/ 是普通目录：数据集放进 $LAB_DATA_DIR/<名称>/，项目里只留一个指向它的 data 软链接。")
+    for entry in sorted(root.iterdir()):
+        if entry.name in (".git", "runs"):
+            continue
+        size = tree_size(entry)
+        if size >= DATA_WARN_GB * GB:
+            warnings.append("{} 有 {:.1f}G：数据集放 $LAB_DATA_DIR，预训练权重放 $LAB_MODELS_DIR，本项目的产物放 runs/，不放在项目目录的其他位置。".format(
+                show(root, entry), size / GB))
     if not getattr(args, "skip_audit", False):
         report = collect(root, duplicates=False)
         removable = sum(size for _, size in report["checkpoints"] + report["misplaced"])

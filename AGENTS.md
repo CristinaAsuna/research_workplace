@@ -17,7 +17,7 @@
 
 1. **一次只做一个子项目。** 在子项目目录里启动会话。在根目录启动时，先问用户做哪个子项目，不通读其他子项目。
 2. **skill 按路径读。** 子项目按 skill `research-project` 和 `lab-machines` 管理。它们不会自动加载：需要时直接读 `~/.agents/skills/<名称>/SKILL.md`。
-3. **先查已有的数据和权重。** 写 DATA.md、计划下载或预处理之前，先读总台的 MACHINES.md 资产表（总台路径见 `~/.config/lab/hub`），再到目标机器上 `ls` 它的数据目录（集群是 `/public_bme/home/maxquan/Datasets/`）。两处都没有，才计划下载；找到了没登记的，先补登记。
+3. **先查已有的数据和权重。** 写 DATA.md、计划下载或预处理之前，先读总台的 MACHINES.md 资产表（总台路径见 `~/.config/lab/hub`），再到目标机器上 `ls` 它的数据目录（集群是 `/public_bme/home/maxquan/Datasets/`）。两处都没有，才计划下载；找到了没登记的，先补登记。新数据集放 `$LAB_DATA_DIR/<名称>/`，权重放 `$LAB_MODELS_DIR`，都不放进子项目。
 4. **子项目互不依赖。** 不 import 其他子项目的代码，不读它们的 runs/。想共用代码时先问用户。
 5. **新建子项目**：在仓库根目录运行
    `python ~/.agents/skills/research-project/scripts/project.py init <paper_repro|idea_verify>/<名称> --name <包名>`，
