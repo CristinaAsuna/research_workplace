@@ -1,0 +1,15 @@
+# 子项目各有自己的 .gitignore；这里兜底，防止产物和缓存进仓库
+runs/
+!/.lab/runs/
+scratch/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.env.*
+!.env.example
+.DS_Store
