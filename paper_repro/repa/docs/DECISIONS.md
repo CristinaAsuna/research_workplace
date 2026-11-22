@@ -25,3 +25,8 @@
 - 决定：唯一评测是 ADM 评测套件的 FID-50K，SDE Euler–Maruyama 250 步，无 CFG；训练前先用官方 SiT-XL/2 4M checkpoint 校验，结果应为 5.9 ± 0.5。
 - 理由：给评测流程一个阳性对照，训练结果偏离时只需查训练一侧。
 - 影响：校验不通过不开始训练。
+
+## D-004 训练数据自己预处理，放 /public_bme2（2026-11-22）
+- 决定：用官方 dataset_tools.py 处理集群上的 ImageNet train（1,281,162 张），产物放 `/public_bme2/bme-cuizhm/maxquan/Datasets/imagenet-repa-in256/`。
+- 理由：没有找到核实过与 REPA 格式一致的开源数据（最接近的 iREPA-collections 约 300 GB 且需转换）；产物约 300 GB，/public_bme 只剩 553 GB 且使用率 100%，/public_bme2 剩 4.4 TB。
+- 影响：比论文少 5 张无法解码的图；数据不在 `$LAB_DATA_DIR` 下，路径写在 docs/DATA.md。

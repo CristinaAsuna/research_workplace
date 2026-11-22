@@ -17,7 +17,7 @@
 
 ## 当前唯一问题
 
-SiT-B/2 + REPA 训 400K 的 FID-50K 能否落在论文 24.4 附近（≤26.5）→ 卡片：experiments/2026-11-22-sitb2-repa-400k/CARD.md（待批准）
+SiT-B/2 + REPA 训 400K 的 FID-50K 能否落在论文 24.4 附近（≤26.5）→ 卡片：experiments/2026-11-22-sitb2-repa-400k/CARD.md（2026-11-22 已批准）
 
 ## 排队（最多 5 项）
 
