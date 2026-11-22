@@ -140,4 +140,4 @@ lab status，核对这张卡片的 result.json 和预测是否一致；一致就
 
 | 子项目 | 类别 | 一句话目标 | 状态 |
 | --- | --- | --- | --- |
-| （暂无） | | | |
+| [paper_repro/repa](paper_repro/repa/STATE.md) | 复现论文 | 复现 REPA：DINOv2 表示对齐加速 SiT 训练，ImageNet 256 FID-50K | 初始化，主干未锁定 |

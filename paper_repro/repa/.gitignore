@@ -1,0 +1,40 @@
+# 产物和临时文件：只留在产生它们的机器上
+/runs/
+/scratch/
+/data/
+/datasets/
+/weights/
+/checkpoints/
+/logs/
+/wandb/
+/swanlab/
+slurm-*.out
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.npy
+*.npz
+*.h5
+*.hdf5
+*.nii
+*.nii.gz
+
+# Python 和工具缓存
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.cache/
+*.egg-info/
+.venv/
+venv/
+
+# 本机配置和密钥
+.env
+.env.*
+!.env.example
+.DS_Store
+.vscode/
+.idea/
