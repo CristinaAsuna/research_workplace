@@ -1,2 +1,35 @@
-# 当前主干的完整配置。只有"主干迁移"才能改这个文件（见 AGENTS.md §7）。
-# 实验写成 configs/exp/<实验 id>.yaml，只列相对本文件的差异。
+# First version for the approved SiT-B/2 400K trunk card.
+train:
+  model: SiT-B/2
+  enc_type: dinov2-vit-b
+  encoder_depth: 4
+  resolution: 256
+  num_classes: 1000
+  path_type: linear
+  prediction: v
+  weighting: uniform
+  legacy: true
+  cfg_prob: 0.1
+  proj_coeff: 0.5
+  batch_size: 256
+  mixed_precision: fp16
+  allow_tf32: true
+  learning_rate: 0.0001
+  adam_weight_decay: 0.0
+  max_grad_norm: 1.0
+  seed: 0
+  max_train_steps: 400000
+  checkpointing_steps: 50000
+  data_dir: /public_bme2/bme-cuizhm/maxquan/Datasets/imagenet-repa-in256
+sample:
+  model: SiT-B/2
+  encoder_depth: 4
+  projector_embed_dims: '768'
+  resolution: 256
+  path_type: linear
+  mode: sde
+  num_steps: 250
+  cfg_scale: 1.0
+  vae: ema
+  per_proc_batch_size: 64
+  num_fid_samples: 50000

@@ -18,6 +18,7 @@
   - `raw/ILSVRC/`：原始数据；
   - `train/`、`val/`：ImageFolder 布局，符号链接，已去掉坏图；
   - `invalid_images_4062340.tsv`：坏图清单，坏图隔离在 `quarantine_invalid_links/`。
+- ADM 参考 batch：`$LAB_DATA_DIR/adm-ref-in256/VIRTUAL_imagenet256_labeled.npz`。
 - `/public_bme2/bme-cuizhm/maxquan/Datasets/imagenet-repa-in256/`（待生成，D-004）：`images/`（in256-images）和 `vae-sd/`（in256-vae-sd），作为训练的 `--data-dir`。约 300 GB，`/public_bme` 剩余太少，所以不放 `$LAB_DATA_DIR`；写之前用探针文件确认能写，生成后登记进 MACHINES.md。
 
 ## 契约
@@ -37,9 +38,9 @@
 
 ## 预处理
 
-基于 edm2 的 `dataset_tools.py`（官方仓库 preprocessing/）。源目录用去掉坏图的 ImageFolder `train/`，不用 `raw/`（raw 里仍有 5 张无法解码的文件）。裁剪在 `bme_cpu`，编码在 GPU 队列：
+基于 edm2 的 `dataset_tools.py`（官方仓库 preprocessing/）。源目录用去掉坏图的 ImageFolder `train/`，不用 `raw/`（raw 里仍有 5 张无法解码的文件）。先按 [PIPELINE.md](PIPELINE.md) 配置环境。裁剪在 `bme_cpu`，编码在 GPU 队列：
 
 ```bash
-python dataset_tools.py convert --source=$LAB_DATA_DIR/imagenet/train --dest=/public_bme2/bme-cuizhm/maxquan/Datasets/imagenet-repa-in256/images --resolution=256x256 --transform=center-crop-dhariwal
-python dataset_tools.py encode --source=/public_bme2/bme-cuizhm/maxquan/Datasets/imagenet-repa-in256/images --dest=/public_bme2/bme-cuizhm/maxquan/Datasets/imagenet-repa-in256/vae-sd
+"$E/train/bin/python" -m repa.preprocessing.dataset_tools convert --source=$LAB_DATA_DIR/imagenet/train --dest=/public_bme2/bme-cuizhm/maxquan/Datasets/imagenet-repa-in256/images --resolution=256x256 --transform=center-crop-dhariwal
+"$E/train/bin/python" -m repa.preprocessing.dataset_tools encode --source=/public_bme2/bme-cuizhm/maxquan/Datasets/imagenet-repa-in256/images --dest=/public_bme2/bme-cuizhm/maxquan/Datasets/imagenet-repa-in256/vae-sd
 ```

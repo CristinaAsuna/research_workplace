@@ -24,6 +24,8 @@ def runs_root():
 
 def run_dir(exp_id, smoke=False):
     """Directory for one experiment's run. Smoke runs never land in runs/."""
+    if not _NAME.fullmatch(exp_id):
+        raise ValueError("exp_id must match [a-z0-9][a-z0-9_-]*")
     path = ROOT / "scratch" / "smoke" / exp_id if smoke else runs_root() / exp_id
     path.mkdir(parents=True, exist_ok=True)
     return path
@@ -39,13 +41,16 @@ def _dump(state, path):
         torch.save(state, path)
 
 
-def save_checkpoint(run, state, metric=None, *, lower_is_better=True, name=None):
+def save_checkpoint(run, state, metric=None, *, lower_is_better=True, name=None, ema_name=None):
     """Overwrite last.pt; also overwrite best.pt (or best_<name>.pt) when metric improves.
 
+    An optional card-approved ema_name saves the bare EMA weights alongside last.
     Returns True when the best checkpoint was updated.
     """
     if name is not None and not _NAME.fullmatch(name):
         raise ValueError("name must match [a-z0-9][a-z0-9_-]*")
+    if ema_name is not None and not re.fullmatch(r"ema_[0-9]{3,}k", ema_name):
+        raise ValueError("ema_name must be an EMA milestone such as ema_050k")
     folder = Path(run) / "checkpoints"
     folder.mkdir(parents=True, exist_ok=True)
     best_stem = "best" if name is None else "best_" + name
@@ -67,6 +72,10 @@ def save_checkpoint(run, state, metric=None, *, lower_is_better=True, name=None)
         record_tmp = folder / ".best.json.tmp"
         record_tmp.write_text(json.dumps({"metric": metric, "lower_is_better": lower_is_better}))
         os.replace(record_tmp, record_path)
+    if ema_name is not None:
+        ema_tmp = folder / f".{ema_name}.pt.tmp"
+        _dump(state["ema"], ema_tmp)
+        os.replace(ema_tmp, folder / f"{ema_name}.pt")
     os.replace(tmp, folder / "last.pt")
     return improved
 
