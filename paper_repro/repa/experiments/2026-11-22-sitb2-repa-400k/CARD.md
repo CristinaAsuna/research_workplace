@@ -29,7 +29,7 @@
 - 存储上限 30 GB（runs/ 下全部产物）；生成样本的 PNG 和 .npz 评测后删除。
 
 ## 要保存的产物
-result.json；checkpoints/last.pt（完整状态，用于续训）；checkpoints/ema_050k.pt … ema_400k.pt（每 50K 一个，只存 EMA 权重，共 8 个；官方默认存完整状态，需改成经 artifacts.py 按名字保存）；figures/fid_curve.png。
+result.json；checkpoints/last.pt（完整状态，用于续训）；只存 EMA 权重的 checkpoints/ema_050k.pt、ema_100k.pt、ema_150k.pt、ema_200k.pt、ema_250k.pt、ema_300k.pt、ema_350k.pt、ema_400k.pt；完整状态的 checkpoints/full_100k.pt、full_200k.pt（供之后从中途分叉的消融用，2026-11-22 训练前加入）；figures/fid_curve.png。合计约 10 GB。
 
 ## 结果
 【运行后填写：数字、与论文的差、结论、这个实验不能说明什么（不能说明 REPA 相对 vanilla 的加速，需要基线）】

@@ -340,7 +340,10 @@ def main(args):
                     ema_name = None
                     if not args.smoke and global_step % 50_000 == 0:
                         ema_name = f"ema_{global_step // 1000:03d}k"
-                    artifacts.save_checkpoint(save_dir, checkpoint, ema_name=ema_name)
+                    full_name = None
+                    if not args.smoke and global_step in set(args.full_checkpoint_steps):
+                        full_name = f"full_{global_step // 1000:03d}k"
+                    artifacts.save_checkpoint(save_dir, checkpoint, ema_name=ema_name, full_name=full_name)
                     logger.info(f"Saved checkpoint to {save_dir / 'checkpoints' / 'last.pt'}")
 
             if (global_step == 1 or (global_step % args.sampling_steps == 0 and global_step > 0)):
@@ -421,6 +424,8 @@ def parse_args(input_args=None):
     parser.add_argument("--epochs", type=int, default=1400)
     parser.add_argument("--max-train-steps", type=int, default=400000)
     parser.add_argument("--checkpointing-steps", type=int, default=50000)
+    parser.add_argument("--full-checkpoint-steps", type=int, nargs="*", default=[],
+                        help="Steps whose full state is kept as full_<k>k.pt (must be listed in the card)")
     parser.add_argument("--gradient-accumulation-steps", type=int, default=1)
     parser.add_argument("--learning-rate", type=float, default=1e-4)
     parser.add_argument("--adam-beta1", type=float, default=0.9, help="The beta1 parameter for the Adam optimizer.")
@@ -444,7 +449,12 @@ def parse_args(input_args=None):
     parser.add_argument("--weighting", default="uniform", type=str, help="Max gradient norm.")
     parser.add_argument("--legacy", action=argparse.BooleanOptionalAction, default=False)
 
-    return parse_config(parser, "train", input_args)
+    args = parse_config(parser, "train", input_args)
+    bad = [s for s in args.full_checkpoint_steps if s <= 0 or s % args.checkpointing_steps]
+    if bad:
+        parser.error(f"--full-checkpoint-steps {bad} must be positive multiples of --checkpointing-steps "
+                     f"({args.checkpointing_steps}); otherwise they are never saved")
+    return args
 
 if __name__ == "__main__":
     args = parse_args()

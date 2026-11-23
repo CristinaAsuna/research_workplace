@@ -20,6 +20,7 @@ train:
   seed: 0
   max_train_steps: 400000
   checkpointing_steps: 50000
+  full_checkpoint_steps: [100000, 200000]  # full state kept for fork ablations (card)
   data_dir: /public_bme2/bme-cuizhm/maxquan/Datasets/imagenet-repa-in256
 sample:
   model: SiT-B/2

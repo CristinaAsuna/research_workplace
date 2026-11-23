@@ -41,16 +41,20 @@ def _dump(state, path):
         torch.save(state, path)
 
 
-def save_checkpoint(run, state, metric=None, *, lower_is_better=True, name=None, ema_name=None):
+def save_checkpoint(run, state, metric=None, *, lower_is_better=True, name=None, ema_name=None, full_name=None):
     """Overwrite last.pt; also overwrite best.pt (or best_<name>.pt) when metric improves.
 
     An optional card-approved ema_name saves the bare EMA weights alongside last.
+    An optional card-approved full_name keeps this step's full state (same bytes as last.pt)
+    as <full_name>.pt, so later runs can fork from it.
     Returns True when the best checkpoint was updated.
     """
     if name is not None and not _NAME.fullmatch(name):
         raise ValueError("name must match [a-z0-9][a-z0-9_-]*")
     if ema_name is not None and not re.fullmatch(r"ema_[0-9]{3,}k", ema_name):
         raise ValueError("ema_name must be an EMA milestone such as ema_050k")
+    if full_name is not None and not re.fullmatch(r"full_[0-9]{3,}k", full_name):
+        raise ValueError("full_name must be a full-state milestone such as full_200k")
     folder = Path(run) / "checkpoints"
     folder.mkdir(parents=True, exist_ok=True)
     best_stem = "best" if name is None else "best_" + name
@@ -76,6 +80,15 @@ def save_checkpoint(run, state, metric=None, *, lower_is_better=True, name=None,
         ema_tmp = folder / f".{ema_name}.pt.tmp"
         _dump(state["ema"], ema_tmp)
         os.replace(ema_tmp, folder / f"{ema_name}.pt")
+    if full_name is not None:
+        full_tmp = folder / f".{full_name}.pt.tmp"
+        if full_tmp.exists():
+            full_tmp.unlink()
+        try:
+            os.link(tmp, full_tmp)  # same bytes as last.pt; survives the next last.pt replace
+        except OSError:
+            _dump(state, full_tmp)
+        os.replace(full_tmp, folder / f"{full_name}.pt")
     os.replace(tmp, folder / "last.pt")
     return improved
 
