@@ -10,8 +10,9 @@
   "command": "bash /public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/preflight-20261122T153041Z/crop.sh",
   "commit": "e1f9f7219c4da0fa4e257704f122724365b5b084",
   "started": "2026-11-22T23:30:42",
-  "ended": null,
-  "status": "running",
+  "ended": "2026-11-24T12:42:47",
+  "status": "done",
   "job": "4359840",
-  "note": "D-004 ImageNet train convert to 256px PNG; no training"
+  "note": "D-004 ImageNet train convert to 256px PNG; no training Verified 1,281,162 converted images and 1000 classes; wall 19h24m05s",
+  "outputs": "/public_bme2/bme-cuizhm/maxquan/Datasets/imagenet-repa-in256/images"
 }
