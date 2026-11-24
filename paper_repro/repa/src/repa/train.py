@@ -338,11 +338,11 @@ def main(args):
                         "scaler": accelerator.scaler.state_dict() if accelerator.scaler else None,
                     }
                     ema_name = None
-                    if not args.smoke and global_step % 50_000 == 0:
-                        ema_name = f"ema_{global_step // 1000:03d}k"
+                    if not args.smoke and global_step % args.checkpointing_steps == 0:
+                        ema_name = artifacts.checkpoint_name("ema", global_step)
                     full_name = None
                     if not args.smoke and global_step in set(args.full_checkpoint_steps):
-                        full_name = f"full_{global_step // 1000:03d}k"
+                        full_name = artifacts.checkpoint_name("full", global_step)
                     artifacts.save_checkpoint(save_dir, checkpoint, ema_name=ema_name, full_name=full_name)
                     logger.info(f"Saved checkpoint to {save_dir / 'checkpoints' / 'last.pt'}")
 

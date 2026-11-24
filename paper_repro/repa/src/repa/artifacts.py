@@ -16,6 +16,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 _NAME = re.compile(r"[a-z0-9][a-z0-9_-]*")
+_STEP_SUFFIX = r"[0-9]{3,}(?:\.[0-9]{3})?k"
 
 
 def runs_root():
@@ -41,6 +42,13 @@ def _dump(state, path):
         torch.save(state, path)
 
 
+def checkpoint_name(kind, step):
+    """Name a milestone in thousands of steps without rounding."""
+    thousands, remainder = divmod(step, 1000)
+    fraction = f".{remainder:03d}" if remainder else ""
+    return f"{kind}_{thousands:03d}{fraction}k"
+
+
 def save_checkpoint(run, state, metric=None, *, lower_is_better=True, name=None, ema_name=None, full_name=None):
     """Overwrite last.pt; also overwrite best.pt (or best_<name>.pt) when metric improves.
 
@@ -51,9 +59,9 @@ def save_checkpoint(run, state, metric=None, *, lower_is_better=True, name=None,
     """
     if name is not None and not _NAME.fullmatch(name):
         raise ValueError("name must match [a-z0-9][a-z0-9_-]*")
-    if ema_name is not None and not re.fullmatch(r"ema_[0-9]{3,}k", ema_name):
+    if ema_name is not None and not re.fullmatch(f"ema_{_STEP_SUFFIX}", ema_name):
         raise ValueError("ema_name must be an EMA milestone such as ema_050k")
-    if full_name is not None and not re.fullmatch(r"full_[0-9]{3,}k", full_name):
+    if full_name is not None and not re.fullmatch(f"full_{_STEP_SUFFIX}", full_name):
         raise ValueError("full_name must be a full-state milestone such as full_200k")
     folder = Path(run) / "checkpoints"
     folder.mkdir(parents=True, exist_ok=True)

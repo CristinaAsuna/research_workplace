@@ -40,3 +40,21 @@ def test_full_name_keeps_step_state_after_next_save(tmp_path):
 def test_full_name_rejects_other_names(tmp_path, bad):
     with pytest.raises(ValueError):
         artifacts.save_checkpoint(tmp_path, {"ema": {}}, full_name=bad)
+
+
+def test_short_steps_keep_separate_full_milestones(tmp_path):
+    folder = tmp_path / "checkpoints"
+    for step in (2, 4, 6):
+        state = {"model": step, "ema": {"w": step}, "opt": step, "steps": step}
+        ema_name = artifacts.checkpoint_name("ema", step)
+        full_name = artifacts.checkpoint_name("full", step) if step in (2, 4) else None
+        artifacts.save_checkpoint(tmp_path, state, ema_name=ema_name, full_name=full_name)
+
+    assert _load(folder / "last.pt")["steps"] == 6
+    for step in (2, 4):
+        suffix = f"000.{step:03d}k.pt"
+        assert _load(folder / f"full_{suffix}")["steps"] == step
+        assert _load(folder / f"ema_{suffix}") == {"w": step}
+    assert artifacts.checkpoint_name("ema", 50_000) == "ema_050k"
+    assert artifacts.checkpoint_name("full", 100_000) == "full_100k"
+    assert artifacts.checkpoint_name("full", 200_000) == "full_200k"
