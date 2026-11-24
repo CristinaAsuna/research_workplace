@@ -1,0 +1,17 @@
+{
+  "run_id": "2026-11-22-sitb2-repa-400k-20261124-124247-cluster",
+  "exp": "2026-11-22-sitb2-repa-400k",
+  "repo": "research_workplace",
+  "project": "paper_repro/repa",
+  "machine": "cluster",
+  "host": "bme_login2",
+  "run_dir": "/public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/2026-11-22-sitb2-repa-400k-20261124-124247-cluster",
+  "code_dir": "/public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/2026-11-22-sitb2-repa-400k-20261124-124247-cluster/code",
+  "command": "bash /public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/preflight-20261122T153041Z/encode.sh /public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/preflight-20261122T153041Z",
+  "commit": "13eded6c794e77f82a1362baa7b37952464295d9",
+  "started": "2026-11-24T12:42:48",
+  "ended": null,
+  "status": "running",
+  "job": "4362133",
+  "note": "D-004 encode checked crop with official single-image VAE; measure full throughput for card"
+}
