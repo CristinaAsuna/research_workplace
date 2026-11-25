@@ -8,7 +8,7 @@
 
 | 标识 | 内容和规模 | 用途 | 位置 |
 |---|---|---|---|
-| imagenet-val | ILSVRC2012 val，1000 类 × 50 张 = 50,000 张 JPEG，约 6.4 GB | 唯一评测集（重建指标、等变误差）；可视化取其中 8 张 | cluster:`$LAB_DATA_DIR/imagenet/val/`（软链接视图）；pc:`~/lab/assets/datasets/imagenet-val/`（待从集群 rsync -L 拉取，拉取后登记） |
+| imagenet-val | ILSVRC2012 val，1000 类 × 50 张 = 50,000 张 JPEG，约 6.4 GB | 唯一评测集（重建指标、等变误差）；可视化取其中 8 张 | cluster:`$LAB_DATA_DIR/imagenet/val/`（软链接视图）；pc:`~/lab/assets/datasets/imagenet-val/`（2026-11-25 拉取，已登记） |
 | imagenet-train | ILSVRC2012 train，可读 1,281,162 张（5 张坏图已隔离） | 微调（代替论文用的 OpenImages，见 D-001） | cluster:`$LAB_DATA_DIR/imagenet/train/`，只在集群 |
 
 OpenImages 不在任何一台机器上，不下载（约 500 GB 以上）。

@@ -19,11 +19,12 @@
 
 在 val 50k 上，原版 SD-VAE 和发布的 EQ-VAE 能否对上 Table 1 和 Table 12？→ 卡片：experiments/2026-11-25-released-vae-eval/CARD.md（2026-11-25 已批准）
 
+正在跑：PC tmux `eqvae-trunk-eval`（run 2026-11-25-released-vae-eval-20261125-045211-pc），3 个模型依次，预计约 6.5 小时。Fig 1/2 可视化已先跑完（用户要求），待核对。翻译模型已停，评测完再用 Start-Translation.ps1 重启。
+
 ## 排队（最多 5 项）
 
-1. analysis：Fig 1、Fig 2 可视化，PC → experiments/2026-11-25-fig12-latent-vis/CARD.md
-2. ablation：EQ 微调 1 epoch，集群空闲时 → experiments/2026-11-25-eqvae-ft-1ep/CARD.md
-3. ablation：不加 EQ 的对照微调，排在第 2 项之后 → experiments/2026-11-25-noeq-ft-1ep/CARD.md
+1. ablation：EQ 微调 1 epoch，集群空闲时 → experiments/2026-11-25-eqvae-ft-1ep/CARD.md
+2. ablation：不加 EQ 的对照微调，排在第 1 项之后 → experiments/2026-11-25-noeq-ft-1ep/CARD.md
 
 ## 搁置的想法
 
