@@ -15,26 +15,37 @@ except ImportError:
 
 
 class CustomDataset(Dataset):
-    def __init__(self, data_dir):
+    def __init__(self, data_dir, index="json"):
+        """index="json" reads the file lists from images/dataset.json and vae-sd/dataset.json
+        written by dataset_tools.py; index="walk" is the official os.walk over every file, which
+        takes ~14 minutes for 2.56M files on the cluster's network disk. Both give the same sorted
+        lists when the directories hold exactly the files the dataset.json files list.
+        """
         PIL.Image.init()
         supported_ext = PIL.Image.EXTENSION.keys() | {'.npy'}
 
         self.images_dir = os.path.join(data_dir, 'images')
         self.features_dir = os.path.join(data_dir, 'vae-sd')
 
+        if index == "json":
+            self._image_fnames = set(self._listed_fnames(self.images_dir))
+            self._feature_fnames = set(self._listed_fnames(self.features_dir))
+        elif index == "walk":
+            self._image_fnames = {
+                os.path.relpath(os.path.join(root, fname), start=self.images_dir)
+                for root, _dirs, files in os.walk(self.images_dir) for fname in files
+                }
+            self._feature_fnames = {
+                os.path.relpath(os.path.join(root, fname), start=self.features_dir)
+                for root, _dirs, files in os.walk(self.features_dir) for fname in files
+                }
+        else:
+            raise ValueError(f"index must be 'json' or 'walk', got {index!r}")
         # images
-        self._image_fnames = {
-            os.path.relpath(os.path.join(root, fname), start=self.images_dir)
-            for root, _dirs, files in os.walk(self.images_dir) for fname in files
-            }
         self.image_fnames = sorted(
             fname for fname in self._image_fnames if self._file_ext(fname) in supported_ext
             )
         # features
-        self._feature_fnames = {
-            os.path.relpath(os.path.join(root, fname), start=self.features_dir)
-            for root, _dirs, files in os.walk(self.features_dir) for fname in files
-            }
         self.feature_fnames = sorted(
             fname for fname in self._feature_fnames if self._file_ext(fname) in supported_ext
             )
@@ -47,6 +58,12 @@ class CustomDataset(Dataset):
         labels = np.array(labels)
         self.labels = labels.astype({1: np.int64, 2: np.float32}[labels.ndim])
 
+
+    @staticmethod
+    def _listed_fnames(directory):
+        with open(os.path.join(directory, 'dataset.json'), 'rb') as f:
+            labels = json.load(f)['labels']
+        return [os.path.normpath(fname.replace('\\', '/')) for fname, _label in labels]
 
     def _file_ext(self, fname):
         return os.path.splitext(fname)[1].lower()

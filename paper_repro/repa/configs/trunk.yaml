@@ -22,6 +22,9 @@ train:
   checkpointing_steps: 50000
   full_checkpoint_steps: [100000, 200000]  # full state kept for fork ablations (card)
   data_dir: /public_bme2/bme-cuizhm/maxquan/Datasets/imagenet-repa-in256
+  dataset_index: json  # file lists from dataset.json instead of walking 2.56M files
+  num_workers: 10  # per GPU; request 12 CPUs per GPU
+  prefetch_factor: 4
 sample:
   model: SiT-B/2
   encoder_depth: 4

@@ -208,15 +208,19 @@ def main(args):
     )
 
     # Setup data:
-    train_dataset = CustomDataset(args.data_dir)
+    train_dataset = CustomDataset(args.data_dir, index=args.dataset_index)
     local_batch_size = int(args.batch_size // accelerator.num_processes)
+    loader_options = {}
+    if args.num_workers > 0:
+        loader_options = {"persistent_workers": True, "prefetch_factor": args.prefetch_factor}
     train_dataloader = DataLoader(
         train_dataset,
         batch_size=local_batch_size,
         shuffle=True,
         num_workers=args.num_workers,
         pin_memory=True,
-        drop_last=True
+        drop_last=True,
+        **loader_options,
     )
     if accelerator.is_main_process:
         logger.info(f"Dataset contains {len(train_dataset):,} images ({args.data_dir})")
@@ -438,7 +442,10 @@ def parse_args(input_args=None):
     parser.add_argument("--seed", type=int, default=0)
 
     # cpu
-    parser.add_argument("--num-workers", type=int, default=4)
+    parser.add_argument("--num-workers", type=int, default=4, help="DataLoader workers per GPU process")
+    parser.add_argument("--prefetch-factor", type=int, default=2, help="Batches each worker keeps ready")
+    parser.add_argument("--dataset-index", type=str, default="json", choices=["json", "walk"],
+                        help="json: file lists from dataset.json (seconds); walk: official os.walk (~14 min on NFS)")
 
     # loss
     parser.add_argument("--path-type", type=str, default="linear", choices=["linear", "cosine"])
