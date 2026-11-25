@@ -10,8 +10,9 @@
   "command": "bash /public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/preflight-20261122T153041Z/encode.sh /public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/preflight-20261122T153041Z",
   "commit": "13eded6c794e77f82a1362baa7b37952464295d9",
   "started": "2026-11-24T12:42:48",
-  "ended": null,
-  "status": "running",
+  "ended": "2026-11-25T08:55:59",
+  "status": "done",
   "job": "4362133",
-  "note": "D-004 encode checked crop with official single-image VAE; measure full throughput for card"
+  "note": "D-004 encode checked crop with official single-image VAE; measure full throughput for card Verified 1,281,162 latent names and paired labels; sampled 64 arrays; A100 80 GB batch 1 encode 48045s at 26.67 images/sec",
+  "outputs": "/public_bme2/bme-cuizhm/maxquan/Datasets/imagenet-repa-in256/vae-sd"
 }
