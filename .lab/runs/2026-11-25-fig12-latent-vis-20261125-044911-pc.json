@@ -1,0 +1,17 @@
+{
+  "run_id": "2026-11-25-fig12-latent-vis-20261125-044911-pc",
+  "exp": "2026-11-25-fig12-latent-vis",
+  "repo": "research_workplace",
+  "project": "paper_repro/eqvae",
+  "machine": "pc",
+  "host": "DESKTOP-2K2CT86",
+  "run_dir": "/home/pc/lab/research_workplace/paper_repro/eqvae/runs/2026-11-25-fig12-latent-vis/2026-11-25-fig12-latent-vis-20261125-044911-pc",
+  "code_dir": "/home/pc/lab/research_workplace/paper_repro/eqvae/runs/2026-11-25-fig12-latent-vis/2026-11-25-fig12-latent-vis-20261125-044911-pc/code",
+  "command": "source tools/env.sh && HF_HUB_OFFLINE=1 ~/lab/envs/eqvae/bin/python -m eqvae.visualize --vaes sd-vae,eq-vae,eq-vae-ema --data /imagenet-val --exp 2026-11-25-fig12-latent-vis --out experiments/2026-11-25-fig12-latent-vis",
+  "commit": "5cb6832ef184cfb04124a3897b2a870d6d0969d3",
+  "started": "2026-11-25T04:49:12",
+  "ended": null,
+  "status": "running",
+  "job": null,
+  "note": null
+}
