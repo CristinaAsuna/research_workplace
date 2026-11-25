@@ -10,8 +10,9 @@
   "command": "bash /public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/benchmark-1gpu-20261125T005806Z/benchmark.sh /public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/benchmark-1gpu-20261125T005806Z",
   "commit": "81bddd1e59ff4c5919b42b7912b52b0798abb413",
   "started": "2026-11-25T08:58:06",
-  "ended": null,
-  "status": "running",
+  "ended": "2026-11-25T09:39:49",
+  "status": "failed",
   "job": "4362966",
-  "note": "Single A100 80 GB 1000-step throughput and memory test; batch 128 matches per-GPU batch of running/queued dual test"
+  "note": "Single A100 80 GB 1000-step throughput and memory test; batch 128 matches per-GPU batch of running/queued dual test Slurm TIMEOUT at 615/1000 steps; steps 100–615: 944s, 1.833s/step, 69.83 images/s, 29472 MiB sampled peak; all logged losses finite; no checkpoint.",
+  "outputs": "/public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/benchmark-1gpu-20261125T005806Z/benchmark-partial-metrics.json"
 }
