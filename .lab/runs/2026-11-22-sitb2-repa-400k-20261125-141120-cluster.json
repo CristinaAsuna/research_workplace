@@ -10,8 +10,8 @@
   "command": "bash /public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/formal-20261125T061118Z/launch.sh /public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa /public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/formal-20261125T061118Z",
   "commit": "bca05a1a68af10efd7b9c43f5992610568841ae4",
   "started": "2026-11-25T14:11:20",
-  "ended": null,
-  "status": "running",
+  "ended": "2026-11-25T14:13:25",
+  "status": "cancelled",
   "job": "4363184",
-  "note": "Formal 400K from d76c79bf4096930d117107c3fee985555f05f732, 2x A100 80 GB, 24 CPUs, 128G, 60h; W&B offline; early gate <=0.45s/step on 100–900, cancel for NaN."
+  "note": "Formal 400K from d76c79bf4096930d117107c3fee985555f05f732, 2x A100 80 GB, 24 CPUs, 128G, 60h; W&B offline; early gate <=0.45s/step on 100–900, cancel for NaN. 4363184 cancelled while pending because partition_bme_gpu limits each job to 16 CPUs; replaced by 4363187."
 }
