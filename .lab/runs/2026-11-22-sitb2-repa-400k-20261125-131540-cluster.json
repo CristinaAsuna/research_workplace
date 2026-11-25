@@ -10,8 +10,9 @@
   "command": "bash /public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/benchmark-d005-w24-20261125T051538Z/benchmark.sh /public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/benchmark-d005-w24-20261125T051538Z",
   "commit": "0a63012c1d4d5bb808bb06d92bcbb024168f3026",
   "started": "2026-11-25T13:15:40",
-  "ended": null,
-  "status": "running",
+  "ended": "2026-11-25T13:36:04",
+  "status": "done",
   "job": "4363106",
-  "note": "One A100 80 GB, 12 CPUs, 64G, 30 min; 24 workers, prefetch 4, batch 128 for 1000 steps, conditional batch 256 for 200 steps only if batch 128 <= 0.45s/step"
+  "note": "One A100 80 GB, 12 CPUs, 64G, 30 min; 24 workers, prefetch 4, batch 128 for 1000 steps, conditional batch 256 for 200 steps only if batch 128 <= 0.45s/step 4363106 completed both stages. Batch 128 steps 100–900: 0.351768s/step, 363.88 img/s, only >2s interval was step 2; TotalCPU 10:39.592, MaxRSS 31995724K, GPU sampled peak 45608 MiB. Batch 256 steps 50–180: 0.677556s/step, sampled peak 60028 MiB; completed 200 steps.",
+  "outputs": "/public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/benchmark-d005-w24-20261125T051538Z"
 }
