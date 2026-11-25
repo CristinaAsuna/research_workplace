@@ -1,0 +1,17 @@
+{
+  "run_id": "2026-11-22-sitb2-repa-400k-20261125-135125-cluster",
+  "exp": "2026-11-22-sitb2-repa-400k",
+  "repo": "research_workplace",
+  "project": "paper_repro/repa",
+  "machine": "cluster",
+  "host": "bme_login2",
+  "run_dir": "/public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/2026-11-22-sitb2-repa-400k-20261125-135125-cluster",
+  "code_dir": "/public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/2026-11-22-sitb2-repa-400k-20261125-135125-cluster/code",
+  "command": "bash /public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/benchmark-b256-1000-20261125T055123Z/benchmark.sh /public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/benchmark-b256-1000-20261125T055123Z",
+  "commit": "d76c79bf4096930d117107c3fee985555f05f732",
+  "started": "2026-11-25T13:51:25",
+  "ended": null,
+  "status": "running",
+  "job": "4363139",
+  "note": "Single A100 80 GB; 1000-step batch-256 benchmark with d76c79b trunk and 24 workers; follow-up to 200-step fit test; no formal training."
+}
