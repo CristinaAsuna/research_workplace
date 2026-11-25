@@ -10,8 +10,8 @@
   "command": "bash /public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/benchmark-20261125T005601Z/benchmark.sh /public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/benchmark-20261125T005601Z",
   "commit": "639f0a7ebf4fbc0dbc771f11a6e9dde7c81d5ac4",
   "started": "2026-11-25T08:56:02",
-  "ended": null,
-  "status": "running",
+  "ended": "2026-11-25T09:39:49",
+  "status": "cancelled",
   "job": "4362963",
-  "note": "1000-step throughput benchmark; full production batch and hardware; no 400K launch"
+  "note": "1000-step throughput benchmark; full production batch and hardware; no 400K launch User cancelled job 4362963 while pending; no training steps executed."
 }
