@@ -14,7 +14,8 @@ export PYTHONDONTWRITEBYTECODE=1
 
 if [ -n "${LAB_MODELS_DIR:-}" ]; then
   export HF_HOME="$LAB_MODELS_DIR/huggingface"
-  export TORCH_HOME="$LAB_MODELS_DIR/torch"
+  # PC 的 torch hub 目录叫 torchhub（MACHINES.md），集群叫 torch
+  if [ -d "$LAB_MODELS_DIR/torchhub" ]; then export TORCH_HOME="$LAB_MODELS_DIR/torchhub"; else export TORCH_HOME="$LAB_MODELS_DIR/torch"; fi
 else
   echo "WARN tools/env.sh：没有设置 LAB_MODELS_DIR，模型权重会落到默认缓存。先在 ~/.bashrc 里设成 MACHINES.md 登记的共享权重目录。" >&2
 fi
@@ -22,3 +23,4 @@ if [ -z "${LAB_DATA_DIR:-}" ]; then
   echo "WARN tools/env.sh：没有设置 LAB_DATA_DIR。数据集放在它下面的 <名称>/，先在 ~/.bashrc 里设成 MACHINES.md 登记的数据目录。" >&2
 fi
 unset _cache
+export PYTHONPATH="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")/.." && pwd)/src${PYTHONPATH:+:$PYTHONPATH}"
