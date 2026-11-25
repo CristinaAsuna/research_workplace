@@ -1,0 +1,17 @@
+{
+  "run_id": "2026-11-22-sitb2-repa-400k-20261125-141325-cluster",
+  "exp": "2026-11-22-sitb2-repa-400k",
+  "repo": "research_workplace",
+  "project": "paper_repro/repa",
+  "machine": "cluster",
+  "host": "bme_login2",
+  "run_dir": "/public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/2026-11-22-sitb2-repa-400k-20261125-141325-cluster",
+  "code_dir": "/public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/2026-11-22-sitb2-repa-400k-20261125-141325-cluster/code",
+  "command": "bash /public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/formal-20261125T061322Z-cpu16/launch.sh /public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa /public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/formal-20261125T061322Z-cpu16",
+  "commit": "a3051c97777297214651fe0b84dfaccbb980822b",
+  "started": "2026-11-25T14:13:26",
+  "ended": null,
+  "status": "running",
+  "job": "4363187",
+  "note": "Formal 400K, source d76c79b; 2x A100 80 GB, 16 CPUs (partition QoS), 128G, 60h; W&B offline; cancel if steps 100–900 average >0.45s/step or NaN."
+}
