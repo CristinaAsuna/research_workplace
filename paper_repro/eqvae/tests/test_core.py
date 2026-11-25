@@ -52,6 +52,15 @@ def test_relative_error_and_psnr():
     assert torch.isfinite(psnr_uint8(to_uint8(x), to_uint8(x))).all()
 
 
+def test_fid_identical_is_zero_and_shift_adds_squared_norm():
+    import numpy as np
+    from eqvae.metrics import fid, gaussian_stats
+    feats = np.random.default_rng(0).normal(size=(400, 8))
+    mu, sigma = gaussian_stats(feats)
+    assert abs(fid(mu, sigma, mu, sigma)) < 1e-6
+    assert fid(mu, sigma, mu + 1.0, sigma) == pytest.approx(8.0, rel=1e-6)
+
+
 def test_to_uint8_matches_eval_py():
     x = torch.tensor([-1.0, 0.0, 1.0, 2.0])
     assert to_uint8(x).tolist() == [0, 128, 255, 255]

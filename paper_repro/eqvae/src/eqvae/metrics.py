@@ -55,9 +55,22 @@ def gaussian_stats(feats):
     return feats.mean(0), np.cov(feats, rowvar=False)
 
 
-def fid(mu1, sigma1, mu2, sigma2):
-    from pytorch_fid.fid_score import calculate_frechet_distance
-    return float(calculate_frechet_distance(mu1, sigma1, mu2, sigma2))
+def fid(mu1, sigma1, mu2, sigma2, eps=1e-6):
+    """pytorch_fid.fid_score.calculate_frechet_distance, rewritten because scipy >= 1.16 removed
+    sqrtm(disp=...), which pytorch-fid 0.3 still passes. Same math and the same fallbacks."""
+    from scipy import linalg
+    mu1, mu2 = np.atleast_1d(mu1), np.atleast_1d(mu2)
+    sigma1, sigma2 = np.atleast_2d(sigma1), np.atleast_2d(sigma2)
+    diff = mu1 - mu2
+    covmean = linalg.sqrtm(sigma1.dot(sigma2))
+    if not np.isfinite(covmean).all():
+        offset = np.eye(sigma1.shape[0]) * eps
+        covmean = linalg.sqrtm((sigma1 + offset).dot(sigma2 + offset))
+    if np.iscomplexobj(covmean):
+        if not np.allclose(np.diagonal(covmean).imag, 0, atol=1e-3):
+            raise ValueError("imaginary component {}".format(np.max(np.abs(covmean.imag))))
+        covmean = covmean.real
+    return float(diff.dot(diff) + np.trace(sigma1) + np.trace(sigma2) - 2 * np.trace(covmean))
 
 
 def relative_error(t, e):
