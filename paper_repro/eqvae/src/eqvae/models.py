@@ -41,13 +41,37 @@ def load_vae(name, device="cpu", dtype=torch.float32):
     return AutoencoderKL.from_pretrained(resolve(name), torch_dtype=dtype).to(device).eval()
 
 
+class _Stub:
+    """Placeholder for classes from packages we do not install (e.g. pytorch_lightning callbacks)."""
+
+    def __init__(self, *args, **kwargs):
+        pass
+
+    def __setstate__(self, state):
+        pass
+
+
+def _stub_pickle_module():
+    import pickle
+    import types
+
+    class Unpickler(pickle.Unpickler):
+        def find_class(self, module, name):
+            try:
+                return super().find_class(module, name)
+            except (ModuleNotFoundError, AttributeError):
+                return _Stub
+
+    return types.SimpleNamespace(Unpickler=Unpickler, load=pickle.load, __name__="pickle")
+
+
 def load_ldm_state(ckpt):
-    """State dict of an LDM Lightning checkpoint. Falls back to full unpickling only for the
-    official kl-f8 file, which may carry non-tensor metadata."""
+    """State dict of an LDM Lightning checkpoint. The official kl-f8 file pickles Lightning
+    objects next to the weights; those are replaced by stubs so pytorch_lightning is not needed."""
     try:
         obj = torch.load(ckpt, map_location="cpu", weights_only=True)
     except Exception:  # noqa: BLE001 - old Lightning pickles
-        obj = torch.load(ckpt, map_location="cpu", weights_only=False)
+        obj = torch.load(ckpt, map_location="cpu", weights_only=False, pickle_module=_stub_pickle_module())
     return obj.get("state_dict", obj)
 
 
