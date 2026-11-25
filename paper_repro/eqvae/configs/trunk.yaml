@@ -6,6 +6,7 @@ vae: sd-vae                # 别名，见 eqvae.models.resolve_vae
 
 eval:
   n: 50000
+  equiv_n: 10000           # 等变误差只在 50k 的均匀 10k 子集上算（D-005）
   seed: 0
   size: 256
   batch_size: 16

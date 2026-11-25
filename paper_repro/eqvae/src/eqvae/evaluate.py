@@ -46,10 +46,14 @@ def _reference_stats(files, size):
 
 
 @torch.no_grad()
-def evaluate(vae_name, data, n, seed=0, batch_size=16, workers=8, device="cuda", cfg=None, log_every=50):
+def evaluate(vae_name, data, n, seed=0, batch_size=16, workers=8, device="cuda", cfg=None, log_every=50,
+             equiv_n=None):
     from .models import load_vae
     cfg = cfg or load_config()["eval"]
     files = even_subset(list_images(data), n)
+    equiv_n = min(equiv_n or cfg.get("equiv_n") or n, len(files))
+    equiv_idx = torch.zeros(len(files), dtype=torch.bool)
+    equiv_idx[torch.from_numpy(np.linspace(0, len(files) - 1, equiv_n).round().astype(np.int64))] = True
     if len(files) < n:
         raise RuntimeError("only {} images under {}, asked for {}".format(len(files), data, n))
     loader = DataLoader(EvalImages(files, cfg["size"]), batch_size=batch_size, num_workers=workers,
@@ -65,7 +69,7 @@ def evaluate(vae_name, data, n, seed=0, batch_size=16, workers=8, device="cuda",
     psnr, ssim, lp, rec_feats, ref_feats = [], [], [], [], []
     equiv = {}
     start = time.time()
-    for it, (x, _) in enumerate(loader):
+    for it, (x, idx) in enumerate(loader):
         x = x.to(device, non_blocking=True)
         post = vae.encode(x).latent_dist
         rec = vae.decode(post.sample(generator=gen).float()).sample
@@ -76,8 +80,11 @@ def evaluate(vae_name, data, n, seed=0, batch_size=16, workers=8, device="cuda",
         rec_feats.append(inception(rec_u8))
         if ref_stats is None:
             ref_feats.append(inception(x_u8))
-        for key, val in equivariance_errors(vae, x, post.mean.float(), cfg["rot_k"], cfg["scales"]).items():
-            equiv.setdefault(key, []).append(val)
+        sel = equiv_idx[idx].to(x.device)
+        if sel.any():
+            errs = equivariance_errors(vae, x[sel], post.mean.float()[sel], cfg["rot_k"], cfg["scales"])
+            for key, val in errs.items():
+                equiv.setdefault(key, []).append(val)
         if log_every and it % log_every == 0:
             done = min((it + 1) * batch_size, len(files))
             print("[{}] {}/{} images, {:.1f} img/s".format(vae_name, done, len(files),
@@ -95,6 +102,7 @@ def evaluate(vae_name, data, n, seed=0, batch_size=16, workers=8, device="cuda",
     runtime = time.time() - start
     return {
         "n": len(files),
+        "equiv_n": int(equiv_idx.sum()),
         "rfid": fid(*ref_stats, *rec_stats),
         "psnr": float(torch.cat(psnr).mean()),
         "lpips": float(torch.cat(lp).mean()),
@@ -115,7 +123,8 @@ def merge_result(out, exp, vae_name, metrics, data, n, seed):
         "exp": exp,
         "commit": git_commit(),
         "config": str(TRUNK.relative_to(artifacts.ROOT)),
-        "eval_set": "ImageNet val, {} images ({}), protocol {}".format(n, data, PROTOCOL),
+        "eval_set": "ImageNet val, {} images ({}), equivariance error on an even {} subset, protocol {}".format(
+            n, data, metrics.get("equiv_n"), PROTOCOL),
         "seed": seed,
     })
     result.setdefault("metrics", {})[vae_name] = {k: v for k, v in metrics.items() if k != "runtime_sec"}
@@ -132,6 +141,7 @@ def main(argv=None):
     parser.add_argument("--vae", required=True, help="sd-vae | eq-vae | eq-vae-ema | local dir | HF id")
     parser.add_argument("--data", required=True)
     parser.add_argument("--n", type=int, default=50000)
+    parser.add_argument("--equiv-n", type=int, default=None, help="images for the equivariance error (default eval.equiv_n)")
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--batch-size", type=int, default=None)
     parser.add_argument("--workers", type=int, default=8)
@@ -144,7 +154,7 @@ def main(argv=None):
     if args.n < cfg["n"] and not str(Path(args.out).resolve()).startswith(str(artifacts.ROOT / "scratch")):
         parser.error("runs with --n < {} are smoke runs: write --out under scratch/".format(cfg["n"]))
     metrics = evaluate(args.vae, args.data, args.n, args.seed, args.batch_size or cfg["batch_size"],
-                       args.workers, args.device, cfg)
+                       args.workers, args.device, cfg, equiv_n=args.equiv_n)
     merge_result(args.out, args.exp, args.name or args.vae, metrics, args.data, args.n, args.seed)
     print(json.dumps({k: v for k, v in metrics.items() if k != "equiv_detail"}, indent=2))
 

@@ -23,3 +23,8 @@
 - 决定：用 diffusers `AutoencoderKL`、lpips VGG、taming NLayerDiscriminator 加 hinge 损失和自适应权重。超参照官方 `eqvae_config.yaml`。
 - 和官方的一处差异：生成器和判别器在同一步看同一对变换后的样本。官方因为 Lightning 对两个优化器各调用一次 `training_step`，两者可能抽到不同的变换。
 - 理由：官方环境是 torch 1.7 + Lightning 旧版，在集群上难以复用。
+
+## D-005 等变误差在 val 50k 的均匀 10k 子集上算（2026-11-25）
+- 决定：rFID、PSNR、LPIPS、SSIM 仍用 50k；R(θ)、S(s) 只在排序后均匀取的 10k 张上算（`eval.equiv_n`）。
+- 理由：PC 上 fp32 实测 3.8 img/s，全量 3 个模型约 11 小时，超出卡片预算；等变误差的 6 次额外编码占一半时间。用户 2026-11-25 选此方案。
+- 影响：和论文 N=50k 只差样本数；相对误差的均值在 10k 上已很稳，但不是逐项同协议。

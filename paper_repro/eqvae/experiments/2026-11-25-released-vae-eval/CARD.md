@@ -21,7 +21,7 @@
 无。这张卡片建立主干：configs/trunk.yaml 的 `eval` 段加 `eqvae.evaluate`。
 
 ## 评测
-同 PIPELINE.md 第 4 节。三个模型各跑一次，seed 0。
+同 PIPELINE.md 第 4 节。三个模型各跑一次，seed 0。等变误差在均匀 10k 子集上算（D-005，运行前确定）。
 
 ## 计算和存储预算
 - PC 显存 ≤5 GB（运行前用 nvidia-smi 确认空闲显存）。

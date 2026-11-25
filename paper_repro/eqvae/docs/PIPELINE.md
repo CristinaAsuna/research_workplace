@@ -41,7 +41,7 @@ python -m eqvae.evaluate --vae <hf-id 或 本地目录> --data ~/lab/assets/data
 ```
 
 - 评测集：ImageNet val 全量 50k，协议见 DATA.md 的契约一节。
-- 主指标：rFID（越低越好），以及等变误差 R(θ)、S(s)（越低越好）。同时报告 PSNR、LPIPS、SSIM。
+- 主指标：rFID（越低越好），以及等变误差 R(θ)、S(s)（越低越好；在均匀 10k 子集上算，D-005）。同时报告 PSNR、LPIPS、SSIM。
 - 必须对比的基线：同一入口下测得的原版 SD-VAE（论文值 rFID 0.90、R 0.89、S 0.69），以及 `zelaki/eq-vae`（0.82、0.56、0.43）。
 - 输出：`experiments/<id>/result.json`。
 - `--n 500` 只用于 smoke，结果写到 scratch/。
