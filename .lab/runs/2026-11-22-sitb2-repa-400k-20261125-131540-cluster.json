@@ -1,0 +1,17 @@
+{
+  "run_id": "2026-11-22-sitb2-repa-400k-20261125-131540-cluster",
+  "exp": "2026-11-22-sitb2-repa-400k",
+  "repo": "research_workplace",
+  "project": "paper_repro/repa",
+  "machine": "cluster",
+  "host": "bme_login2",
+  "run_dir": "/public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/2026-11-22-sitb2-repa-400k-20261125-131540-cluster",
+  "code_dir": "/public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/2026-11-22-sitb2-repa-400k-20261125-131540-cluster/code",
+  "command": "bash /public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/benchmark-d005-w24-20261125T051538Z/benchmark.sh /public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/benchmark-d005-w24-20261125T051538Z",
+  "commit": "0a63012c1d4d5bb808bb06d92bcbb024168f3026",
+  "started": "2026-11-25T13:15:40",
+  "ended": null,
+  "status": "running",
+  "job": "4363106",
+  "note": "One A100 80 GB, 12 CPUs, 64G, 30 min; 24 workers, prefetch 4, batch 128 for 1000 steps, conditional batch 256 for 200 steps only if batch 128 <= 0.45s/step"
+}
