@@ -141,3 +141,4 @@ lab status，核对这张卡片的 result.json 和预测是否一致；一致就
 | 子项目 | 类别 | 一句话目标 | 状态 |
 | --- | --- | --- | --- |
 | [paper_repro/repa](paper_repro/repa/STATE.md) | 复现论文 | 复现 REPA：DINOv2 表示对齐加速 SiT 训练，ImageNet 256 FID-50K | 初始化，主干未锁定 |
+| [paper_repro/eqvae](paper_repro/eqvae/STATE.md) | 复现论文 | 复现 EQ-VAE：SD-VAE latent 的等变性观察（Fig 1/2、Table 1），以及 1 epoch 等变微调 | 初始化，主干未锁定 |

@@ -1,0 +1,3 @@
+# 相对 configs/trunk.yaml：无参数差异，在主干 SD-VAE 上按 train 段默认值（p_eq=0.5）做 EQ 微调。
+exp: 2026-11-25-eqvae-ft-1ep
+train: {}

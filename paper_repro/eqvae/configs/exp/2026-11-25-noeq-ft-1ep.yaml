@@ -1,0 +1,4 @@
+# 相对 configs/trunk.yaml：只关掉等变分支，其余与 2026-11-25-eqvae-ft-1ep 相同。
+exp: 2026-11-25-noeq-ft-1ep
+train:
+  p_eq: 0.0
