@@ -1,0 +1,17 @@
+{
+  "run_id": "2026-11-25-released-vae-eval-20261125-045211-pc",
+  "exp": "2026-11-25-released-vae-eval",
+  "repo": "research_workplace",
+  "project": "paper_repro/eqvae",
+  "machine": "pc",
+  "host": "DESKTOP-2K2CT86",
+  "run_dir": "/home/pc/lab/research_workplace/paper_repro/eqvae/runs/2026-11-25-released-vae-eval/2026-11-25-released-vae-eval-20261125-045211-pc",
+  "code_dir": "/home/pc/lab/research_workplace/paper_repro/eqvae/runs/2026-11-25-released-vae-eval/2026-11-25-released-vae-eval-20261125-045211-pc/code",
+  "command": "source tools/env.sh && for v in sd-vae eq-vae eq-vae-ema; do HF_HUB_OFFLINE=1 ~/lab/envs/eqvae/bin/python -m eqvae.evaluate --vae  --data /imagenet-val --n 50000 --exp 2026-11-25-released-vae-eval --out experiments/2026-11-25-released-vae-eval/result.json || exit 1; done",
+  "commit": "4473ea09a2ec01810d2defaa70bcb9119f54303d",
+  "started": "2026-11-25T04:52:11",
+  "ended": null,
+  "status": "running",
+  "job": "eqvae-trunk-eval",
+  "note": null
+}
