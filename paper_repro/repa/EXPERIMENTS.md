@@ -4,4 +4,4 @@
 
 | id | 类型 | 问题 | 影响的决定 | 状态 | 一句话结论 | 卡片 |
 |---|---|---|---|---|---|---|
-| 2026-11-22-sitb2-repa-400k | trunk | SiT-B/2+REPA 400K 的 FID-50K 能否到 24.4 附近 | 是否锁定 trunk-v1 | running | 裁剪完成，D-003 FID 5.9584，checkpoint smoke 通过 | [卡片](experiments/2026-11-22-sitb2-repa-400k/CARD.md) |
+| 2026-11-22-sitb2-repa-400k | trunk | SiT-B/2+REPA 400K 的 FID-50K 能否到 24.4 附近 | 是否锁定 trunk-v1 | running | 128 万图编码已核对，D-003 FID 5.9584 | [卡片](experiments/2026-11-22-sitb2-repa-400k/CARD.md) |
