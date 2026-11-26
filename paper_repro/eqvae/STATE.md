@@ -19,7 +19,7 @@
 
 在 val 50k 上，原版 SD-VAE 和发布的 EQ-VAE 能否对上 Table 1 和 Table 12？→ 卡片：experiments/2026-11-25-released-vae-eval/CARD.md（2026-11-25 已批准）
 
-正在跑：PC tmux `eqvae-trunk-eval`（run 2026-11-25-released-vae-eval-20261125-045211-pc），3 个模型依次，预计约 6.5 小时。Fig 1/2 可视化已先跑完（用户要求），待核对。翻译模型已停，评测完再用 Start-Translation.ps1 重启。
+结果：trunk 评测 2026-11-25 跑完，重建四项全部对上论文，eq-vae 的 S(s) 比 SD-VAE 低 53%（见卡片）。待用户核对后锁定 trunk-v1。Fig 1/2 可视化也已跑完，待核对。PC 的翻译模型已重启。
 
 ## 排队（最多 5 项）
 
