@@ -1,0 +1,109 @@
+{
+  "exp": "2026-11-25-released-vae-eval",
+  "commit": "ed1d263",
+  "config": "configs/trunk.yaml",
+  "eval_set": "ImageNet val, 50000 images (/home/pc/lab/assets/datasets/imagenet-val), equivariance error on an even 10000 subset, protocol resize256-centercrop256-u8trunc-pytorchfid2048-v1",
+  "seed": 0,
+  "metrics": {
+    "sd-vae": {
+      "n": 50000,
+      "equiv_n": 10000,
+      "rfid": 0.8681345400322584,
+      "psnr": 25.826679229736328,
+      "lpips": 0.14594560861587524,
+      "ssim": 0.7207001447677612,
+      "equiv_rot": 0.8332021633783976,
+      "equiv_scale": 0.5166957974433899,
+      "equiv_detail": {
+        "rot1": 0.7666334509849548,
+        "rot2": 0.9362447261810303,
+        "rot3": 0.7967283129692078,
+        "scale0.25": 0.727965235710144,
+        "scale0.5": 0.4576072692871094,
+        "scale0.75": 0.36451488733291626
+      },
+      "img_per_sec": 6.424065551158366,
+      "peak_mem_gib": 4.250160217285156
+    },
+    "eq-vae": {
+      "n": 50000,
+      "equiv_n": 10000,
+      "rfid": 0.8197181158291187,
+      "psnr": 25.9666690826416,
+      "lpips": 0.14193464815616608,
+      "ssim": 0.7225481271743774,
+      "equiv_rot": 0.34016358852386475,
+      "equiv_scale": 0.24109715223312378,
+      "equiv_detail": {
+        "rot1": 0.2696015238761902,
+        "rot2": 0.44452133774757385,
+        "rot3": 0.3063679039478302,
+        "scale0.25": 0.514193058013916,
+        "scale0.5": 0.1453217715024948,
+        "scale0.75": 0.06377662718296051
+      },
+      "img_per_sec": 6.547303691287783,
+      "peak_mem_gib": 4.250160217285156
+    },
+    "eq-vae-ema": {
+      "n": 50000,
+      "equiv_n": 10000,
+      "rfid": 0.5502882897048949,
+      "psnr": 26.16050910949707,
+      "lpips": 0.13329266011714935,
+      "ssim": 0.724156379699707,
+      "equiv_rot": 0.19722102085749307,
+      "equiv_scale": 0.2490941360592842,
+      "equiv_detail": {
+        "rot1": 0.14188003540039062,
+        "rot2": 0.28416356444358826,
+        "rot3": 0.16561946272850037,
+        "scale0.25": 0.5881146192550659,
+        "scale0.5": 0.1269288957118988,
+        "scale0.75": 0.03223889321088791
+      },
+      "img_per_sec": 6.546328376489929,
+      "peak_mem_gib": 4.250160217285156
+    }
+  },
+  "runtime_sec": {
+    "sd-vae": 7783.233156919479,
+    "eq-vae": 7636.731448173523,
+    "eq-vae-ema": 7637.869218349457
+  },
+  "baseline": {
+    "paper": {
+      "sd-vae": {
+        "rfid": 0.9,
+        "psnr": 25.82,
+        "lpips": 0.146,
+        "ssim": 0.71,
+        "equiv_rot": 0.89,
+        "equiv_scale": 0.69,
+        "equiv_rot_v1v2": 0.93,
+        "equiv_scale_v1v2": 0.8
+      },
+      "eq-vae": {
+        "rfid": 0.82,
+        "psnr": 25.95,
+        "lpips": 0.141,
+        "ssim": 0.72,
+        "equiv_rot": 0.56,
+        "equiv_scale": 0.43,
+        "equiv_rot_v1v2": 0.49,
+        "equiv_scale_v1v2": 0.15
+      },
+      "eq-vae-ema": {
+        "rfid": 0.55,
+        "psnr": 26.15,
+        "lpips": 0.133,
+        "ssim": 0.72
+      }
+    }
+  },
+  "outputs": {
+    "fid_ref_cache": "pc:~/lab/research_workplace/paper_repro/eqvae/runs/_cache/fid-ref/",
+    "run_log": "pc:~/lab/research_workplace/paper_repro/eqvae/runs/2026-11-25-released-vae-eval/2026-11-25-released-vae-eval-20261125-045211-pc/run.log"
+  },
+  "run_id": "2026-11-25-released-vae-eval-20261125-045211-pc"
+}
