@@ -10,8 +10,9 @@
   "command": "source tools/env.sh && for v in sd-vae eq-vae eq-vae-ema; do HF_HUB_OFFLINE=1 ~/lab/envs/eqvae/bin/python -m eqvae.evaluate --vae  --data /imagenet-val --n 50000 --exp 2026-11-25-released-vae-eval --out experiments/2026-11-25-released-vae-eval/result.json || exit 1; done",
   "commit": "4473ea09a2ec01810d2defaa70bcb9119f54303d",
   "started": "2026-11-25T04:52:11",
-  "ended": null,
-  "status": "running",
+  "ended": "2026-11-25T17:50:08",
+  "status": "done",
   "job": "eqvae-trunk-eval",
-  "note": null
+  "note": null,
+  "outputs": "pc:~/lab/research_workplace/paper_repro/eqvae/runs/2026-11-25-released-vae-eval/2026-11-25-released-vae-eval-20261125-045211-pc"
 }
