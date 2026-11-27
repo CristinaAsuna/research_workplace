@@ -4,4 +4,4 @@
 
 | id | 类型 | 问题 | 影响的决定 | 状态 | 一句话结论 | 卡片 |
 |---|---|---|---|---|---|---|
-| 2026-11-22-sitb2-repa-400k | trunk | SiT-B/2+REPA 400K 的 FID-50K 能否到 24.4 附近 | 是否锁定 trunk-v1 | running | 单卡 batch 128 0.352 秒/步，256 可运行 | [卡片](experiments/2026-11-22-sitb2-repa-400k/CARD.md) |
+| 2026-11-22-sitb2-repa-400k | trunk | SiT-B/2+REPA 400K 的 FID-50K 能否到 24.4 附近 | 是否锁定 trunk-v1 | running | 单卡 0.352 秒/步，双卡第 0 步退出，端口修复通过 CPU 验证 | [卡片](experiments/2026-11-22-sitb2-repa-400k/CARD.md) |

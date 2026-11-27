@@ -35,10 +35,10 @@ E=/public_bme2/bme-cuizhm/maxquan/research_iter/envs/repa
 ## 2. 训练
 
 ```bash
-"$E/train/bin/python" -m accelerate.commands.launch --num_processes 2 --module repa.train --exp-name 2026-11-22-sitb2-repa-400k
+bash tools/launch-dual-gpu.sh "$E/train/bin/python" --module repa.train --exp-name 2026-11-22-sitb2-repa-400k
 ```
 
-默认读取 `configs/trunk.yaml`。用 `--exp configs/exp/<id>.yaml` 覆盖对应配置，显式 CLI 参数优先。batch 是全局 batch。续训用同一 `--exp-name` 加 `--resume`，读取完整的 `checkpoints/last.pt`。卡片约定的 50K 间隔另存 EMA 权重。
+在分配到两张 GPU 的同一计算节点运行这条命令。脚本为 Accelerate 1.2.1 选择本地非零端口。默认读取 `configs/trunk.yaml`。用 `--exp configs/exp/<id>.yaml` 覆盖对应配置，显式 CLI 参数优先。batch 是全局 batch。续训用同一 `--exp-name` 加 `--resume`，读取完整的 `checkpoints/last.pt`。卡片约定的 50K 间隔另存 EMA 权重。
 
 ## 3. 采样
 
