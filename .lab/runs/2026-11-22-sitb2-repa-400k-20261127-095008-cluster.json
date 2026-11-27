@@ -1,0 +1,17 @@
+{
+  "run_id": "2026-11-22-sitb2-repa-400k-20261127-095008-cluster",
+  "exp": "2026-11-22-sitb2-repa-400k",
+  "repo": "research_workplace",
+  "project": "paper_repro/repa",
+  "machine": "cluster",
+  "host": "bme_login2",
+  "run_dir": "/public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/2026-11-22-sitb2-repa-400k-20261127-095008-cluster",
+  "code_dir": "/public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/2026-11-22-sitb2-repa-400k-20261127-095008-cluster/code",
+  "command": "bash /public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/formal-20261127T014946Z-portfix/launch.sh /public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa /public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/formal-20261127T014946Z-portfix",
+  "commit": "60aa742b2ca2ab2f77d304f7536e8311a375fb7d",
+  "started": "2026-11-27T09:50:09",
+  "ended": null,
+  "status": "running",
+  "job": "4365378",
+  "note": "Formal 400K dual-A100 retry, verified port fix, W&B offline. Logs: /public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/formal-20261127T014946Z-portfix"
+}
