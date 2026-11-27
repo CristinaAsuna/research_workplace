@@ -10,8 +10,8 @@
   "command": "bash /public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/formal-20261125T061322Z-cpu16/launch.sh /public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa /public_bme2/bme-cuizhm/maxquan/research_iter/research_workplace/paper_repro/repa/runs/2026-11-22-sitb2-repa-400k/formal-20261125T061322Z-cpu16",
   "commit": "a3051c97777297214651fe0b84dfaccbb980822b",
   "started": "2026-11-25T14:13:26",
-  "ended": null,
-  "status": "running",
+  "ended": "2026-11-27T09:47:54",
+  "status": "failed",
   "job": "4363187",
-  "note": "Formal 400K, source d76c79b; 2x A100 80 GB, 16 CPUs (partition QoS), 128G, 60h; W&B offline; cancel if steps 100–900 average >0.45s/step or NaN."
+  "note": "Formal 400K, source d76c79b; 2x A100 80 GB, 16 CPUs (partition QoS), 128G, 60h; W&B offline; cancel if steps 100–900 average >0.45s/step or NaN. Slurm 4363187 failed during initialization at step 0: TCPStore connection to 127.0.0.1:0 timed out. Patched launcher verified separately with a two-rank CPU Gloo all-reduce."
 }
